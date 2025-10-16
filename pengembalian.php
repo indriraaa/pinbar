@@ -165,19 +165,84 @@ $peminjaman = mysqli_query($db, $query);
         </div>
 
         <!-- Menu Desktop -->
-        <a href="beranda.php"><div class="card"><div class="card-body text-center"><i class="fa-solid fa-house text-primary mb-1"></i><br>Beranda</div></div></a>
-        <?php if ($role === 'admin'): ?>
-          <a href="hal.php"><div class="card"><div class="card-body text-center"><i class="fa-solid fa-box text-success mb-1"></i><br>Data Barang</div></div></a>
-          <a href="pegawai.php"><div class="card"><div class="card-body text-center"><i class="fa-solid fa-user-tie text-info mb-1"></i><br>Data Pegawai</div></div></a>
-          <a href="riwayat.php"><div class="card"><div class="card-body text-center"><i class="fa-solid fa-clock-rotate-left text-warning mb-1"></i><br>Riwayat</div></div></a>
-          <a href="laporan.php"><div class="card"><div class="card-body text-center"><i class="fa-solid fa-file-lines text-secondary mb-1"></i><br>Laporan</div></div></a>
+        <?php if($role === 'admin'): ?>
+          <a href="beranda.php">
+            <div class="card mb-2 text-center">
+              <div class="card-body">
+                <i class="fa-solid fa-house text-primary mb-1"></i><br>Beranda
+              </div>
+            </div>
+          </a>
+          <a href="hal.php">
+            <div class="card mb-2 text-center">
+              <div class="card-body">
+                <i class="fa-solid fa-box text-success mb-1"></i><br>Data Barang
+              </div>
+            </div>
+          </a>
+          <a href="pengguna.php">
+            <div class="card mb-2 text-center">
+              <div class="card-body">
+                <i class="fa-solid fa-user text-primary mb-1"></i><br>Data Pegawai
+              </div>
+            </div>
+          </a>
+          <a href="peminjaman.php">
+            <div class="card mb-2 text-center">
+              <div class="card-body">
+                <i class="fa-solid fa-hand-holding text-success mb-1"></i><br>Peminjaman
+              </div>
+            </div>
+          </a>
+          <a href="pengembalian.php">
+            <div class="card mb-2 text-center">
+              <div class="card-body">
+                <i class="fa-solid fa-rotate-left text-danger mb-1"></i><br>Pengembalian Barang
+              </div>
+            </div>
+          </a>
+          <a href="riwayat.php">
+            <div class="card mb-2 text-center">
+              <div class="card-body">
+                <i class="fa-solid fa-clock-rotate-left text-warning mb-1"></i><br>Riwayat
+              </div>
+            </div>
+          </a>
+          <a href="laporan.php">
+            <div class="card mb-2 text-center">
+              <div class="card-body">
+                <i class="fa-solid fa-file-alt text-info mb-1"></i><br>Laporan
+              </div>
+            </div>
+          </a>
+
+        <?php elseif($role === 'pegawai'): ?>
+          <a href="beranda.php">
+            <div class="card mb-2 text-center">
+              <div class="card-body">
+                <i class="fa-solid fa-house text-primary mb-1"></i><br>Beranda
+              </div>
+            </div>
+          </a>
+          <a href="peminjaman.php">
+            <div class="card mb-2 text-center">
+              <div class="card-body">
+                <i class="fa-solid fa-hand-holding text-success mb-1"></i><br>Peminjaman
+              </div>
+            </div>
+          </a>
+          <a href="pengembalian.php">
+            <div class="card mb-2 text-center">
+              <div class="card-body">
+                <i class="fa-solid fa-rotate-left text-danger mb-1"></i><br>Pengembalian Barang
+              </div>
+            </div>
+          </a>
         <?php endif; ?>
-        <a href="peminjaman.php"><div class="card"><div class="card-body text-center"><i class="fa-solid fa-hand-holding text-success mb-1"></i><br>Peminjaman</div></div></a>
-        <a href="pengembalian.php"><div class="card"><div class="card-body text-center"><i class="fa-solid fa-rotate-left text-danger mb-1"></i><br>Pengembalian</div></div></a>
       </div>
     </div>
 
-    <!-- Form -->
+    <!-- Form Pengembalian -->
     <div class="col-lg-9 col-md-12">
       <div class="bg-white p-4 shadow-sm rounded">
         <h2 class="mb-4">Pengembalian Barang</h2>
@@ -189,20 +254,22 @@ $peminjaman = mysqli_query($db, $query);
                   <select name="id_peminjaman" id="id_peminjaman" class="form-select" required>
                     <option value="">-- Pilih Peminjaman --</option>
                     <?php while($row = mysqli_fetch_assoc($peminjaman)): ?>
-                    <option value="<?= $row['id_peminjaman'] ?>">
-                      <?= $row['nama_peminjam'] ?> - <?= $row['nama_barang'] ?> (<?= $row['jumlah'] ?>) | Pinjam: <?= date('d-m-Y', strtotime($row['tanggal_pinjam'])) ?>
-                    </option>
+                      <option value="<?= $row['id_peminjaman'] ?>">
+                        <?= $row['nama_peminjam'] ?> - <?= $row['nama_barang'] ?> (<?= $row['jumlah'] ?>)
+                        | Pinjam: <?= date('d-m-Y', strtotime($row['tanggal_pinjam'])) ?>
+                      </option>
                     <?php endwhile; ?>
                   </select>
                 </td>
               </tr>
               <tr>
                 <td>
-                  <input type="date" name="tanggal_kembali" id="tanggal_kembali" class="form-control" value="<?= date('Y-m-d') ?>" required>
+                  <input type="date" name="tanggal_kembali" id="tanggal_kembali"
+                    class="form-control" value="<?= date('Y-m-d') ?>" required>
                 </td>
               </tr>
               <tr>
-                <td colspan="2" class="text-end">
+                <td class="text-end">
                   <button type="submit" class="btn btn-success">
                     <i class="fa-solid fa-floppy-disk"></i> Simpan
                   </button>
